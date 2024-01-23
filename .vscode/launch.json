@@ -1,0 +1,58 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cpp-IPC",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/cpp-ipc",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "text": "-gdb-set follow-fork-mode parent", //parent or child both seem to work if 'schedule-multiple is enabled.
+                },
+                {
+                    "text": "-gdb-set schedule-multiple on", //must be set to 'on' if follow-fork-mode is 'parent', or child will never run.
+                },
+                {
+                    "description": "On a fork, keep gdb attached to both processes.",
+                    "text": "-gdb-set detach-on-fork off", //set to off
+                },
+                {
+                    "description": "PID stays the same after renaming forked process",
+                    "text": "-gdb-set follow-exec-mode same", //'same' or 'new' works
+                },
+                {
+                    "description": "Let other processes continue if one hits a break point",
+                    "text": "-gdb-set non-stop off", //this is probably optional, depending on desired behavior
+                },
+                {
+                    "description": "needs to be off for 'non-stop' mode?",
+                    "text": "-gdb-set pagination off", //unsure if this is needed
+                },
+                {
+                    "description": "Need this 'on' to ensure 'non-stop on' works",
+                    "text": "-gdb-set target-async on",
+                }
+            ]
+        }
+    ]
+}
